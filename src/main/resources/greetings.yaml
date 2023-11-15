@@ -1,0 +1,16 @@
+morning:
+  us: "Good morning, {name}!"
+  tr: "Günaydın, {name}!"
+  de: "Guten Morgen, {name}!"
+afternoon:
+  us: "Good afternoon, {name}!"
+  tr: "Tünaydın, {name}!"
+  de: "Hallo, {name}!"
+evening:
+  us: "Good evening, {name}!"
+  tr: "Iyi akşamlar, {name}!"
+  de: "Guten Abend, {name}!"
+night:
+  us: "Good night, {name}!"
+  tr: "İyi geceler, {name}!"
+  de: "Gute Nacht, {name}!"
