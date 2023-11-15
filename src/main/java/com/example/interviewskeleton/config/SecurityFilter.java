@@ -29,18 +29,19 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        if (request.getHeader("X-Auth-Token").equals(SECRET_TOKEN)) {
+
+        boolean isRequestNotSecured = excludedMatchers.stream()
+                .anyMatch(matcher -> matcher.matches(request));
+
+        if (!isRequestNotSecured && request.getHeader("X-Auth-Token").equals(SECRET_TOKEN)) {
             LOGGER.info("Request was authenticated.");
             filterChain.doFilter(request, response);
+        } else if (isRequestNotSecured) {
+            LOGGER.info("Request does not need to be authenticated.");
+            filterChain.doFilter(request, response);
         } else {
+            LOGGER.info("Request forbidden.");
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
     }
-
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) {
-        return excludedMatchers.stream()
-                .anyMatch(matcher -> matcher.matches(request));
-    }
-
 }
